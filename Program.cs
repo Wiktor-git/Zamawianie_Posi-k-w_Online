@@ -7,13 +7,13 @@ namespace ZamawianiePosiłkowOnline
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddDbContext<AppDbContext>(options => 
+            builder.Services.AddDbContext<ApplicationDbContext>(options => 
             options.UseSqlServer(builder.Configuration.GetConnectionString("sqlServerConnectionString")));
 
             builder.Services.AddIdentity<Users, IdentityRole>(options =>
@@ -25,9 +25,12 @@ namespace ZamawianiePosiłkowOnline
                 options.Password.RequiredLength = 2;
                 options.User.RequireUniqueEmail = false;
                 options.SignIn.RequireConfirmedAccount = false;
-            }).AddEntityFrameworkStores<AppDbContext>()
-              .AddDefaultTokenProviders();
+            }).AddEntityFrameworkStores<ApplicationDbContext>()
+              .AddDefaultTokenProviders()
+              .AddRoles<IdentityRole>();
 
+            builder.Services.AddMemoryCache();
+            builder.Services.AddSession();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -37,7 +40,7 @@ namespace ZamawianiePosiłkowOnline
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -48,6 +51,36 @@ namespace ZamawianiePosiłkowOnline
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            //Create roles
+            using(var scope = app.Services.CreateScope())
+            {
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var roles = new[] { "Admin", "Client" };
+
+                foreach (var role in roles)
+                {
+                    if (!await roleManager.RoleExistsAsync(role))
+                        await roleManager.CreateAsync(new IdentityRole(role));
+                }
+            }
+            //add roles
+            using (var scope = app.Services.CreateScope())
+            {
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<Users>>();
+
+                string email = "admin@admin.pl";
+                string password = "admin";
+                if(await userManager.FindByEmailAsync(email) == null)
+                {
+                    var user = new Users()
+                    { Email = email,
+                      UserName = email,
+                      FullName = "admin"};
+                    await userManager.CreateAsync(user, password);
+                    await userManager.AddToRoleAsync(user, "Admin");
+                }
+            }
 
             app.Run();
         }

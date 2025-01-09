@@ -1,0 +1,47 @@
+﻿@model Meal
+
+<form method="post" asp-action="DeletePOST">
+    <input asp-for="Id" hidden/>
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Usuń danie</h2>
+            <hr />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Name"></label>
+            <input disabled asp-for="Name" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Description"></label>
+            <input disabled asp-for="Description" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="CityAvailability"></label>
+            <input disabled asp-for="CityAvailability" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Calories"></label>
+            <input disabled asp-for="Calories" class="form-control" type="number" step=".01" min="0" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Weight"></label>
+            <input disabled asp-for="Weight" class="form-control" type="number" step=".01" min="0" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="ImageUrl"></label>
+@*             <input disabled type="file" name="file" class="form-control" accept="image/*" /> *@
+        </div>
+        <div class="mb-3">
+            <img src="~/MealImages/@Model.ImageUrl" width="190" height="190"></img>
+            <input asp-for="ImageUrl" type="hidden" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="MealPrice"></label>
+            <input disabled asp-for="MealPrice" class="form-control" type="number" step=".01" min="0" />
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:150px">Zatwierdź usunięcie</button>
+        <a asp-controller="Meal" asp-action="Index" class="btn btn-secondary" style="width:150px">
+            Wróć
+        </a>
+    </div>
+</form>

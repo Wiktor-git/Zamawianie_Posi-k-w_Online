@@ -1,0 +1,28 @@
+﻿<form method="post" enctype="multipart/form-data">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Płatność - dokończ zamówienie</h2>
+            <hr />
+        </div>
+        <div class="mb-3">
+            <label>Adres Dostawy</label>
+            <input name="address" class="form-control" type="text" required />
+        </div>
+        <div class="mb-3">
+            <label for="cars">Sposób płatności:</label>
+            <select type="text" name="sposobPlatnosci" id="PaymentMethod" required>
+                <option type="text" value="karta">Karta kredytowa</option>
+                <option type="text" value="przelew">Przelew</option>
+                <option type="text" value="blik">Blik</option>
+                <option type="text" value="gotowka">Gotówka przy odbiorze</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:300px" asp-controller="orders" asp-action="ConfirmPurchase">&#128181Zapłać - (Koniec Transakcji)</button>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

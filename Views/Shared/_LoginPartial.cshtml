@@ -5,7 +5,14 @@
     @if (signInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">Logout</a>
+            <a class="nav-link" style="font-size: 25px;" asp-controller="Orders" asp-action="ViewCart" { width: 300px;
+               height: 100px;
+               padding: 15px;
+               background-color: coral;
+               box-shadow: 10px 10px;}>&#128722</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">Wyloguj</a>
         </li>
     } else
     {
@@ -13,7 +20,7 @@
             <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Register</a>
+            <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Rejestracja</a>
         </li>
     }
 </ul>

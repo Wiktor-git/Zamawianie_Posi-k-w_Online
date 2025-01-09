@@ -11,7 +11,7 @@ using ZamawianiePosiłkowOnline.Data;
 
 namespace ZamawianiePosiłkowOnline.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20241223145341_init")]
     partial class init
     {

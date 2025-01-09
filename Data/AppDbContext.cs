@@ -4,11 +4,15 @@ using ZamawianiePosiłkowOnline.Models;
 
 namespace ZamawianiePosiłkowOnline.Data
 {
-    public class AppDbContext : IdentityDbContext<Users>
+    public class ApplicationDbContext : IdentityDbContext<Users>
     {
-        public AppDbContext(DbContextOptions options) : base(options)
+        public ApplicationDbContext(DbContextOptions options) : base(options)
         {
 
         }
+        public DbSet<Meal> Meals { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderedItems { get; set; }
+        public DbSet<City> Cities { get; set; }
     }
 }
