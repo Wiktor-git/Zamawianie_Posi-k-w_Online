@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ZamawianiePosiłkowOnline.Models.Restaurant>
+
+@{
+    ViewData["Title"] = "Restauracje";
+}
+<partial name="_Notification"| />
+<h1>Restauracje</h1>
+
+<p>
+    <a asp-action="Create">Dodaj Nową Restaruracje</a>
+</p>
+<table class="table">
+    <table class="table table-bordered table-striped">
+        <style>
+            table,
+            td,
+            th {
+                border: 1px solid;
+                padding: 20px;
+            }
+
+            td {
+                height: 220px;
+                vertical-align: middle;
+            }
+
+            table {
+                text-align: center;
+                vertical-align: middle;
+            }
+        </style>
+        <thread>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Zdjęcie
+                </th>
+                <th>
+                    Nazwa
+                </th>
+                <th></th>
+            </tr>
+        </thread>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.RestaurantID
+            </td>
+            <td>
+                <img src="~/CityImages/@item.ImageUrl" width="350" height="350">
+            </td>
+            <td>
+                        @Html.DisplayFor(modelItem => item.RestaurantName)
+            </td>
+            <td>
+                    <a asp-action="Delete" asp-route-id="@item.RestaurantID" class="btn btn-danger">Usuń</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

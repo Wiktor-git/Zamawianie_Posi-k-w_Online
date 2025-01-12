@@ -11,10 +11,22 @@ namespace ZamawianiePosiłkowOnline
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            //true - use sqlite false-use sql server
+            bool useSQLite = true;
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddDbContext<ApplicationDbContext>(options => 
-            options.UseSqlServer(builder.Configuration.GetConnectionString("sqlServerConnectionString")));
+            if (!useSQLite)
+            {
+                //    "sqlServerConnectionString": "Server=Rydwan;Database=TestProjectdb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=true"
+                builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("sqlServerConnectionString")));
+            }
+            if (useSQLite)
+            {
+                builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlite(builder.Configuration.GetConnectionString("localDb")));
+            }
 
             builder.Services.AddIdentity<Users, IdentityRole>(options =>
             {

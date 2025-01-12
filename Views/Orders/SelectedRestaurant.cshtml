@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Meal>
+@{
+    ViewData["Title"] = "Dania";
+}
+<partial name="_Notification" />
+<div class="container pt-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Restauracja abcd</h2>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered table-striped">
+    <style>
+        table,
+        td,
+        th {
+            border: 1px solid;
+            padding: 20px;
+        }
+
+        td {
+            height: 220px;
+            vertical-align: middle;
+        }
+
+        table {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+    <thread>
+        <tr>
+            <th>
+                Zdjęcie
+            </th>
+            <th>
+                Nazwa dania
+            </th>
+            <th>
+                Opis
+            </th>
+            <th>
+                Kalorie
+            </th>
+            <th>
+                Waga
+            </th>
+            <th>
+                Cena
+            </th>
+            <th></th>
+        </tr>
+    </thread>
+    <tbody>
+        @foreach (var meal in Model)
+        {
+            <tr>
+                <td style="width:200px">
+                    <img src="~/MealImages/@meal.ImageUrl" width="190" height="190"></img>
+                </td>
+                <td style="width:9%">
+                    @meal.Name
+                </td>
+                <td style="width:22%">
+                    @meal.Description
+                </td>
+                <td style="width:7%">
+                    @meal.Calories
+                </td>
+                <td style="width:7%">
+                    @String.Concat(meal.Weight, "g")
+                </td>
+                <td style="width:9%">
+                    @String.Concat(Math.Round(meal.MealPrice, 2), " PLN")
+                </td>
+                <td style="width:9%">
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-controller="Orders" asp-action="AddToCart" asp-route-id="@meal.Id" class="btn btn-primary">&#128722Do koszyka</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.ComponentModel;
 using ZamawianiePosiłkowOnline.Data;
@@ -6,6 +7,7 @@ using ZamawianiePosiłkowOnline.Models;
 
 namespace ZamawianiePosiłkowOnline.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class MealController : Controller
     {
         private readonly ApplicationDbContext _db;

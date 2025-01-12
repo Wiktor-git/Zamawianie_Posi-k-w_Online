@@ -6,6 +6,7 @@ using ZamawianiePosiłkowOnline.Models;
 
 namespace ZamawianiePosiłkowOnline.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

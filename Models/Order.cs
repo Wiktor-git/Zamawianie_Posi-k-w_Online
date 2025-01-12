@@ -16,5 +16,7 @@ namespace ZamawianiePosiłkowOnline.Models
         public decimal TotalPaid { get; set; }
         [Column(TypeName = "money")]
         public decimal DiscountAmmount { get; set; }
+        public string PaymentMethod { get; set; }
+        public string UserAddress { get; set; }
     }
 }

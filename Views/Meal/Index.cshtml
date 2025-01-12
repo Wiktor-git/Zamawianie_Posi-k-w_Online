@@ -6,7 +6,7 @@
 <div class="container pt-3">
     <div class="row pt-4">
         <div class="col-6">
-            <h2 class="text-primary">Category List</h2>
+            <h2 class="text-primary">Lista Dań</h2>
         </div>
         <div class="col-6 pb-3 text-end">
             <a asp-controller="Meal" asp-action="Create" class="btn btn-primary">
@@ -82,13 +82,13 @@
                     @String.Concat(Math.Round(meal.MealPrice,2), " PLN")
                 </td>
                 <td style ="width:1%">
-                    <div class="w-75 btn-group" role="group">
-                        <a asp-controller="Meal" asp-action="Edit" asp-route-id="@meal.Id" class="btn btn-primary">&#128736Edytuj</a>
+                    <div class="w-75 btn-group" role="group" >
+                        <a asp-controller="Meal" asp-action="Edit" asp-route-id="@meal.Id" class="btn btn-primary" style="padding: 5px 10px;">&#128736Edytuj</a>
                     </div>
                 </td>
                 <td style="width:1%">
-                    <div class="w-75 btn-group" role="group">
-                        <a asp-controller="Meal" asp-action="Delete" asp-route-id="@meal.Id" class="btn btn-danger">&#128465Usuń</a>
+                    <div class="w-75 btn-group" role="group" >
+                        <a asp-controller="Meal" asp-action="Delete" asp-route-id="@meal.Id" class="btn btn-danger" style="padding: 5px 10px;">&#128465Usuń</a>
                     </div>
                 </td>
             </tr>

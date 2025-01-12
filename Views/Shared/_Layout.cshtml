@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Users> SingInManager
+@inject UserManager<Users> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -40,8 +44,8 @@
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index">
-                                Home
+                            <a class="nav-link active" asp-area="" asp-controller="OrderDetail" asp-action="Index">
+                                Zamówienia
                                 <span class="visually-hidden">(current)</span>
                             </a>
                         </li>
@@ -51,16 +55,17 @@
                                 <span class="visually-hidden">(current)</span>
                             </a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Panel Admina</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-controller="Meal" asp-action="Index">Dania</a>
-                                <a class="dropdown-item" asp-controller="Cities" asp-action="Index">Miasta</a>
-                                <a class="dropdown-item" asp-controller="Reports" asp-action="Index">Raporty</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
-                            </div>
-                        </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                                    <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Panel Admina</a>
+                                    <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-controller="Meal" asp-action="Index">Dania</a>
+                                    <a class="dropdown-item" asp-controller="Restaurant" asp-action="Index">Restauracje</a>
+                                    <a class="dropdown-item" asp-controller="Reports" asp-action="Index">Raporty</a>
+                                    </div>
+                                    </li>
+                        };
                         @*
                         <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>

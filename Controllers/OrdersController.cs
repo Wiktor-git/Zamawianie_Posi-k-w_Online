@@ -6,6 +6,8 @@ using ZamawianiePosiłkowOnline.Models;
 using ZamawianiePosiłkowOnline.ViewModels;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ZamawianiePosiłkowOnline.Controllers
 {
@@ -20,7 +22,12 @@ namespace ZamawianiePosiłkowOnline.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            return View(await _db.Meals.ToListAsync());
+            return View(await _db.Restaurants.ToListAsync());
+        }
+        public async Task<IActionResult> SelectedRestaurant(int? id)
+        {
+            var restaurant = await _db.Restaurants.FindAsync(id);
+            return View(await _db.Meals.Where(x => x.CityAvailability == restaurant.RestaurantName).ToListAsync());
         }
         public IActionResult AddToCart(int? id)
         {
@@ -42,10 +49,11 @@ namespace ZamawianiePosiłkowOnline.Controllers
                     Quantity = 1
                 });
             }
-            TempData["OrderInfo"] = "Dodano ";
-
             HttpContext.Session.Set("Cart", cartItems);
-            return RedirectToAction("ViewCart");
+            TempData["CartMessage"] = $"dodano {mealToAdd.Name} do koszyka";
+
+            int orderItemRestaurantID = _db.Restaurants.Where( r => r.RestaurantName == mealToAdd.CityAvailability).First().RestaurantID;
+            return RedirectToAction("SelectedRestaurant", new {id = orderItemRestaurantID });
         }
         [HttpGet]
         public IActionResult ViewCart()
@@ -129,13 +137,25 @@ namespace ZamawianiePosiłkowOnline.Controllers
                 DeliveryDate = deliveryTime,
                 TotalPaid = (decimal)cartViewModel.TotalTotal,
                 DiscountAmmount = 0,
+                PaymentMethod = sposobPlatnosci,
+                UserAddress = address
             };
             _db.Orders.Add(order);
             _db.SaveChanges();
-            TempData["success"] = $"poprawnie spełniono zamówienie dostawa przewidywana {order.ScheduledDeliveryDate.TimeOfDay}";
+            foreach (var item in cartViewModel.CartItems)
+            {
+                _db.OrderedItems.Add(new OrderItem()
+                {
+                    OrderID = order.Id,
+                    MealID = item.CartMeal.Id,
+                    AmmountOrdered = item.Quantity,
+                    OrderPrice = item.CartMeal.MealPrice * (decimal)item.Quantity,
+                });
+            }
+            _db.SaveChanges();
+            TempData["success"] = $"złożono zamówienie dostawa przewidywana {order.ScheduledDeliveryDate.TimeOfDay}";
+            HttpContext.Session.Set("Cart", new List<ShoppingCartItem>());
             return RedirectToAction("Index");
-
-            return View();
         }
     }
 }
