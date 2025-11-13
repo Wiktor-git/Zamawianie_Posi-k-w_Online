@@ -30,8 +30,8 @@
         <div class="column">
             <img src="~/CityImages/@restaurant.ImageUrl" width="333" height="333" />
             <div>
-                <a class="btn" class="column" asp-controller="Orders" asp-action="SelectedRestaurant" asp-route-id="@restaurant.RestaurantID" style="width:333px">
-                    <p style="width:323px ">@restaurant.RestaurantName</p>
+                <a class="btn" class="column" asp-controller="Orders" asp-action="SelectedRestaurant" asp-route-id="@restaurant.RestaurantID" style="width:333px" >
+                    @restaurant.RestaurantName
                 </a>
             </div>
         </div>

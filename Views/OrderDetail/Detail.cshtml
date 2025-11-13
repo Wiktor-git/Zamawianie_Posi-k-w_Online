@@ -4,15 +4,168 @@
     ViewData["Title"] = "Detail";
 }
 
-<h1>Detail</h1>
+<h1>Szczegóły zamówienia</h1>
 
-<div>
-    <h4>OrderDetailViewModel</h4>
-    <hr />
-    <dl class="row">
-    </dl>
+<div class="container pt-3">
+    <table>
+        <thread>
+            <tr>
+                <th>
+                    ID zamówienia
+                </th>
+                <th>
+                    Data Zamówienia
+                </th>
+                <th>
+                    Data Dostawy
+                </th>
+                <th>
+                    Sposób Płatności
+                </th>
+                <th>
+                    Zapłacono
+                </th>
+                <th>
+                    Adres Dostawy
+                </th>
+            </tr>
+        </thread>
+        <tbody>
+            <tr>
+                <td>
+                    @Model.Order.Id
+                </td>
+                <td>
+                    @Model.Order.OrderDate
+                </td>
+                <td>
+                    @Model.Order.DeliveryDate
+                </td>
+                <td>
+                    @Model.Order.PaymentMethod
+                </td>
+                <td>
+                    @Model.Order.TotalPaid
+                </td>
+                <td>
+                    @Model.Order.UserAddress
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<h4>Zamówione dania</h4>
+<table class="table table-bordered table-striped">
+    <style>
+        table,
+        td,
+        th {
+            border: 1px solid;
+            padding: 20px;
+        }
+
+        td {
+            height: 220px;
+            vertical-align: middle;
+        }
+
+        table {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+    <thread>
+        <tr>
+            <th>
+                ID dania
+            </th>
+            <th>
+                Nazwa dania
+            </th>
+            <th>
+                Ilość
+            </th>
+            <th>
+                Cena
+            </th>
+        </tr>
+    </thread>
+    <tbody>
+        @foreach (var order in Model.Orders)
+        {
+            <tr>
+                <td style="width:200px">
+                    @order.MealID
+                </td>
+                <td style="width:9%">
+                    @Model.OrderedMeals.FirstOrDefault(I => I.Id == order.MealID).Name
+                </td>
+                <td style="width:22%">
+                    @order.AmmountOrdered
+                </td>
+                <td style="width:7%">
+                    @order.OrderPrice
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@* <h1>Zamówione produkty</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders.FirstOrDefault().Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders.FirstOrDefault().MealID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScheduledDeliveryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeliveryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalPaid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiscountAmmount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ScheduledDeliveryDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveryDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPaid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiscountAmmount)
+                </td>
+                <td style="width:1%">
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-controller="OrderDetail" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary" style="padding: 5px 10px;">&#128736Edytuj</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+ *@

@@ -15,8 +15,8 @@ namespace ZamawianiePosiłkowOnline.Models
         [Required(ErrorMessage = "Wymagany poprawny opis")]
         [StringLength(200, ErrorMessage = "maks 200 znaków")]
         public string Description { get; set; }
-        [Display(Name = "W jakim mieście dostępne")]
-        [Required(ErrorMessage = "Wymagane poprawne miasto")]
+        [Display(Name = "W jakiej restauracji dostępne")]
+        [Required(ErrorMessage = "Wymagane poprawna restauracja")]
         public string CityAvailability { get; set; }
         [Display(Name = "Ilość kalorii")]
         [Required(ErrorMessage = "Wymagana poprawna ilość kalorii")]

@@ -14,6 +14,7 @@ namespace ZamawianiePosiłkowOnline.Controllers
     [Authorize(Roles = "Admin")]
     public class RestaurantController : Controller
     {
+
         private readonly ApplicationDbContext _db;
         private readonly IWebHostEnvironment _webEnvironment;
 

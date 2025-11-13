@@ -28,15 +28,15 @@ namespace ZamawianiePosiłkowOnline.Controllers
         }
         public async Task<IActionResult> Detail(int? id)
         {
+            var orderList = await _db.OrderedItems.Where(o => o.OrderID == id).ToListAsync();
+
             OrderDetailViewModel detailsModel = new OrderDetailViewModel()
             {
-                ID = 1,
                 Order = await _db.Orders.FindAsync(id),
-                Orders = await _db.OrderedItems.Where(o => o.OrderID == id).ToListAsync()
-
+                Orders = orderList,
+                OrderedMeals = await _db.Meals.Where(o => orderList.Select(i => i.MealID).Contains(o.Id)).ToListAsync()
             };
             return View(detailsModel);
-
-        }
+         }
     }
 }

@@ -51,7 +51,7 @@
                 </td>
                 <td>
                     <form asp-action="InputChange" asp-route-id="@meal.Id">
-                        <input value=@meal.Quantity style="width:20%" asp-controller="Orders" asp-action="InputChange" asproute-id="@meal.Id" type="number" name="inputQuantity" class="custom-range" min="1" max="99" step="1" />
+                        <input value=@meal.Quantity asp-controller="Orders" asp-action="InputChange" asproute-id="@meal.Id" type="number" name="inputQuantity" class="custom-range" min="1" max="99" step="1" />
                         <input hidden type="submit" value="Save" class="btn btn-primary" />
                     </form>
                 </td>
@@ -82,21 +82,21 @@
             <td></td>
             <td></td>
             <td style="width:150px">Razem:</td>
-            <td style="width:150px">@Model.TotalPrice?.ToString("C")</td>
+            <td style="width:150px">@String.Concat(Math.Round((decimal)Model.TotalPrice, 2), " PLN")</td>
         </tr>
         <tr>
             <td></td>
             <td></td>
             <td></td>
             <td style="width:150px">+Dostawa:</td>
-            <td style="width:150px">@Model.TotalDeliveryCost?.ToString("C")</td>
+            <td style="width:150px">@String.Concat(Math.Round((decimal)Model.TotalDeliveryCost, 2), " PLN")</td>
         </tr>
         <tr>
             <td></td>
             <td></td>
             <td></td>
             <td style="width:150px">Do Zapłaty:</td>
-            <td style="width:150px">@Model.TotalTotal?.ToString("C")</td>
+            <td style="width:150px">@String.Concat(Math.Round((decimal)Model.TotalTotal, 2), " PLN")</td>
         </tr>
         <tr>
             <td></td>

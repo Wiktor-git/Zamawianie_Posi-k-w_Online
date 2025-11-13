@@ -1,14 +1,17 @@
-﻿@model IEnumerable<ZamawianiePosiłkowOnline.Models.Order>
-
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<ZamawianiePosiłkowOnline.Models.Order>
+@inject SignInManager<Users> SingInManager
+@inject UserManager<Users> UserManager
 @{
     ViewData["Title"] = "Moje Zamówienia";
 }
+@if (User.IsInRole("Admin"))
+{
+<h1>Wszystkie Zamówienia</h1>
+} else {
+<h1>Moje Zamówienia</h1>
+}
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -26,9 +29,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TotalPaid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DiscountAmmount)
             </th>
             <th></th>
         </tr>
@@ -51,12 +51,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.TotalPaid)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiscountAmmount)
-            </td>
             <td style="width:1%">
                 <div class="w-75 btn-group" role="group">
-                    <a asp-controller="OrderDetail" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary" style="padding: 5px 10px;">&#128736Edytuj</a>
+                    <a asp-controller="OrderDetail" asp-action="Detail" asp-route-id="@item.Id" class="btn btn-primary" style="padding: 5px 10px;">&#128736Szczegóły</a>
                 </div>
             </td>
         </tr>

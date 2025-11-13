@@ -9,5 +9,6 @@ namespace ZamawianiePosiłkowOnline.ViewModels
         public int ID { get; set; }
         public Order Order { get; set; }
         public List<OrderItem> Orders { get; set; }
+        public List<Meal> OrderedMeals { get; set; }
     }
 }

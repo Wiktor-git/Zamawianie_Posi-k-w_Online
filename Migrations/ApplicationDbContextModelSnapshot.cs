@@ -244,6 +244,28 @@ namespace ZamawianiePosiłkowOnline.Migrations
                     b.ToTable("OrderedItems");
                 });
 
+            modelBuilder.Entity("ZamawianiePosiłkowOnline.Models.Reports", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ReportType")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserID")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("UserReports");
+                });
+
             modelBuilder.Entity("ZamawianiePosiłkowOnline.Models.Restaurant", b =>
                 {
                     b.Property<int>("RestaurantID")

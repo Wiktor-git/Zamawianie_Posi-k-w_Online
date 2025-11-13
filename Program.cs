@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NLog.Web;
+using NLog;
 using ZamawianiePosiłkowOnline.Data;
 using ZamawianiePosiłkowOnline.Models;
 
@@ -9,6 +11,10 @@ namespace ZamawianiePosiłkowOnline
     {
         public static async Task Main(string[] args)
         {
+            var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+
+            try
+            {
             var builder = WebApplication.CreateBuilder(args);
 
             //true - use sqlite false-use sql server
@@ -43,6 +49,8 @@ namespace ZamawianiePosiłkowOnline
 
             builder.Services.AddMemoryCache();
             builder.Services.AddSession();
+            builder.Logging.ClearProviders();
+            builder.Host.UseNLog();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -62,7 +70,7 @@ namespace ZamawianiePosiłkowOnline
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Orders}/{action=Index}/{id?}");
 
             //Create roles
             using(var scope = app.Services.CreateScope())
@@ -94,7 +102,16 @@ namespace ZamawianiePosiłkowOnline
                 }
             }
 
-            app.Run();
+                app.Run();
+                                }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+            }
+            finally
+            {
+                LogManager.Shutdown();
+            }
         }
     }
 }
